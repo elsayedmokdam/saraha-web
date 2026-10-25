@@ -162,7 +162,6 @@ export default function ConversationsShell({
 
             <ul>
               {visible.map((c) => {
-                console.log({ c });
                 const iAsked = c.sender?._id === meId;
                 const otherUser = iAsked ? c.receiver : c.sender;
 

@@ -12,8 +12,6 @@ export default async function Page() {
     limit: String(LIMIT),
   });
 
-  console.log(response)
-
   return (
     <>
       <PageHeader

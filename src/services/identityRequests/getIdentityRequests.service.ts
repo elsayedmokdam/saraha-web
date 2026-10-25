@@ -16,7 +16,6 @@ export const getIdentityRequestsService = async (
   params: PaginationParams = {},
 ): Promise<HttpResult<ApiResponse<Paginated<IdentityRequest>>>> => {
   const token = await getAccessToken();
-  console.log(params)
 
   const query = new URLSearchParams(
     Object.entries(params).filter(([, v]) => v !== undefined && v !== "") as [

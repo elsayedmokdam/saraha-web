@@ -60,7 +60,6 @@ export default function UsersTable({ users }: UsersTableProps) {
   }, [userPage.data, query]);
 
   async function loadPage(page: number, force = false) {
-    console.log({page, force})
     if (
       isLoadingPage ||
       page < 1 ||
@@ -72,12 +71,10 @@ export default function UsersTable({ users }: UsersTableProps) {
 
     setIsLoadingPage(true);
     setPageError(undefined);
-    console.log({page, limit: userPage.meta.limit})
     const result = await getAllUsersAction({
       page: String(page),
       limit: String(userPage.meta.limit),
     });
-    console.log({ result })
     setIsLoadingPage(false);
 
     if (!result.ok) {
