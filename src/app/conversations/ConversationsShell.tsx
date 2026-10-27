@@ -1,6 +1,14 @@
 "use client";
 
-import { createContext, useContext, useMemo, useState } from "react";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import {
@@ -14,6 +22,7 @@ import { getUserConversationsAction } from "@/services/actions/conversation.acti
 import { Conversation } from "@/services/types/message_interface";
 import { listTime } from "@/services/utils/helpers/formatDate";
 import UserAvatar from "@/components/shared/user-avatar/UserAvatar";
+import SearchInput from "@/components/shared/search-input/SearchInput";
 
 /** Lets the chat on the right know which side of the conversation I am. */
 interface ConversationsContextValue {
@@ -54,9 +63,8 @@ export default function ConversationsShell({
   const [hasMore, setHasMore] = useState(initialTotalPages > 1);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(initialError);
-  const [query, setQuery] = useState("");
+  const [search, setSearch] = useState("");
 
-  // The API does not sort: newest conversation first
   const sorted = useMemo(
     () =>
       [...items].sort(
@@ -66,50 +74,74 @@ export default function ConversationsShell({
     [items],
   );
 
-  const visible = useMemo(() => {
-    const q = query.trim().toLowerCase();
-
-    if (!q) return sorted;
-
-    return sorted.filter((c) => {
-      const senderUser = Array.isArray(c.sender) ? c.sender[0] : c.sender;
-
-      const iAsked = senderUser?._id === meId;
-      const otherUser = iAsked ? c.receiver : senderUser;
-
-      const fullName = [otherUser?.firstName, otherUser?.lastName]
-        .filter(Boolean)
-        .join(" ")
-        .toLowerCase();
-
-      return fullName.includes(q);
-    });
-  }, [sorted, query, meId]);
-
   const ctx = useMemo(
     () => ({ meId, find: (id: string) => items.find((c) => c._id === id) }),
     [meId, items],
   );
 
-  async function loadMore() {
-    setLoading(true);
-    setError(undefined);
-    const res = await getUserConversationsAction({
-      page: String(page + 1),
-      limit: String(limit),
-    });
-    setLoading(false);
-    if (!res.ok) return setError(res.error.message);
+  const requestIdRef = useRef(0);
 
-    const { data, meta } = res.data.data;
-    const known = new Set(items.map((c) => c._id));
-    const fresh = data.filter((c) => !known.has(c._id));
-    setTotal(meta.total);
-    setPage(page + 1);
-    setItems((prev) => [...prev, ...fresh]);
-    // if the API ignored `page` it answers the same items again: stop instead of looping
-    setHasMore(fresh.length > 0 && meta.page < meta.totalPages);
-  }
+  const loadConversations = useCallback(
+    async (query: string, nextPage: number) => {
+      const requestId = ++requestIdRef.current;
+
+      setLoading(true);
+      setError(undefined);
+
+      try {
+        const res = await getUserConversationsAction({
+          page: String(nextPage),
+          limit: String(limit),
+          search: query.trim() || undefined,
+        });
+
+        // Ignore outdated responses.
+        if (requestId !== requestIdRef.current) return;
+
+        if (!res.ok) {
+          setError(res.error.message);
+          return;
+        }
+
+        const { data, meta } = res.data.data;
+
+        setItems((prev) => {
+          if (nextPage === 1) return data;
+
+          const known = new Set(prev.map((c) => c._id));
+
+          return [...prev, ...data.filter((c) => !known.has(c._id))];
+        });
+
+        setPage(meta.page);
+        setTotal(meta.total);
+        setHasMore(meta.page < meta.totalPages);
+      } catch {
+        if (requestId === requestIdRef.current) {
+          setError("Failed to load conversations. Please try again.");
+        }
+      } finally {
+        if (requestId === requestIdRef.current) {
+          setLoading(false);
+        }
+      }
+    },
+    [limit],
+  );
+
+  const handleSearch = useCallback(
+    (query: string) => {
+      setSearch(query);
+      loadConversations(query, 1);
+    },
+    [loadConversations],
+  );
+
+  const loadMore = useCallback(async () => {
+    if (loading || !hasMore) return;
+
+    await loadConversations(search, page + 1);
+  }, [loading, hasMore, search, page, loadConversations]);
 
   return (
     <ConversationsContext.Provider value={ctx}>
@@ -122,18 +154,14 @@ export default function ConversationsShell({
             <div className="flex items-center justify-between">
               <h1 className="text-xl font-bold text-foreground">Chats</h1>
               <span className="rounded-full bg-accent px-2.5 py-0.5 text-xs font-semibold text-accent-foreground">
-                {visible.length}
+                {items.length}
               </span>
             </div>
-            <div className="relative">
-              <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-              <input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search by name..."
-                className="w-full rounded-xl border border-transparent bg-muted py-2.5 pl-9 pr-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-main-color focus:outline-none"
-              />
-            </div>
+            <SearchInput
+              onSearch={handleSearch}
+              placeholder="Search chats by name or email..."
+              className="w-full"
+            />
           </div>
 
           <div className="min-h-0 flex-1 overflow-y-auto">
@@ -141,27 +169,41 @@ export default function ConversationsShell({
               <p className="p-6 text-center text-sm text-red-500">{error}</p>
             )}
 
-            {!error && items.length === 0 && (
-              <div className="flex flex-col items-center gap-3 p-8 text-center">
-                <span className="flex size-14 items-center justify-center rounded-full bg-muted text-2xl text-muted-foreground">
-                  <FiMessageCircle />
+            {!loading && !error && items.length === 0 && (
+              <div className="flex flex-col items-center gap-3 px-6 py-12 text-center">
+                <span className="flex size-14 items-center justify-center rounded-full bg-muted text-muted-foreground">
+                  {search ? (
+                    <FiSearch className="size-6" />
+                  ) : (
+                    <FiMessageCircle className="size-6" />
+                  )}
                 </span>
-                <p className="font-semibold text-foreground">No chats yet</p>
-                <p className="text-sm text-muted-foreground">
-                  A chat starts when someone accepts your identity request, or
-                  when you accept one.
-                </p>
-                <Link
-                  href="/identity-requests"
-                  className="mt-1 rounded-xl bg-main-color px-4 py-2 text-sm font-semibold text-white hover:bg-main-color/90"
-                >
-                  Identity requests
-                </Link>
+
+                <div className="space-y-1">
+                  <p className="font-semibold text-foreground">
+                    {search ? "No results found" : "No chats yet"}
+                  </p>
+
+                  <p className="max-w-56 text-sm leading-relaxed text-muted-foreground">
+                    {search
+                      ? "No conversations match your search. Try a different name or keyword."
+                      : "A chat starts when someone accepts your identity request, or when you accept one."}
+                  </p>
+                </div>
+
+                {!search && (
+                  <Link
+                    href="/identity-requests"
+                    className="mt-1 rounded-xl bg-main-color px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-main-color/90"
+                  >
+                    Identity requests
+                  </Link>
+                )}
               </div>
             )}
 
             <ul>
-              {visible.map((c) => {
+              {sorted.map((c) => {
                 const iAsked = c.sender?._id === meId;
                 const otherUser = iAsked ? c.receiver : c.sender;
 
@@ -218,9 +260,9 @@ export default function ConversationsShell({
               })}
             </ul>
 
-            {visible.length === 0 && items.length > 0 && (
+            {sorted?.length === 0 && items.length > 0 && (
               <p className="p-6 text-center text-sm text-muted-foreground">
-                No chat matches “{query}”.
+                No chat matches your search.
               </p>
             )}
 

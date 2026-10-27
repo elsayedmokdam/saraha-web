@@ -1,3 +1,4 @@
+import { headers as getRequestHeaders } from "next/headers";
 import { API_LANGUAGE } from "../config";
 
 export interface HttpConfig {
@@ -51,6 +52,14 @@ async function createHeaders(
   // Auth Token => `Authorization: Bearer <jwt>`
   if (config.requiredAuthToken && config.token && !headers.has("Authorization")) {
     headers.set("Authorization", `Bearer ${config.token}`);
+  }
+
+  const requestHeaders = await getRequestHeaders();
+  const forwardedIp =
+    requestHeaders.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    requestHeaders.get("x-real-ip")?.trim();
+  if (forwardedIp && !headers.has("x-forwarded-for")) {
+    headers.set("x-forwarded-for", forwardedIp);
   }
 
   return headers;

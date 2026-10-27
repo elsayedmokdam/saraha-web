@@ -55,6 +55,7 @@ For production use `.env.production` (same keys) and `npm run build && npm start
 ## Things the API forces the front-end to handle
 
 * **`Accept-Language` must be `0` or `1`.** Node's `fetch` sends `*` and browsers send `en-US,...`; the API rejects both with 400. The HTTP client always sends `0`.
+* **API requests forward the caller IP in `X-Forwarded-For`.** The shared HTTP client reads the first address from the incoming `X-Forwarded-For` header, or `X-Real-IP` if that is the only address supplied by the hosting proxy. A hosting proxy must provide one of these headers for the caller IP to be forwarded.
 * **`/user/rotate-token` issues tokens without a `sub` claim** (`createLoginCredentials({ payload: user })` should be `{ sub: user._id, role: user.role }`), so rotated tokens are rejected. The front-end detects this and signs the user out cleanly instead of keeping a broken session. After you fix the API it rotates silently.
 * **Password hashes are returned by `/user/profile`, `/user/all`, confirm-email, etc.** They are stripped on the server (`sanitizeUser`) and never reach the browser.
 * `GET /conversation/user` ignores `page` / `limit` and does not sort (the controller does not pass `req.query` to `find()`), so it returns at most 10 conversations. The list sorts client-side and "Load more" starts working as soon as the API forwards the query.

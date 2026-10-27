@@ -22,4 +22,5 @@ export interface Paginated<T> {
 export interface PaginationParams {
   page?: string;
   limit?: string;
+  search?: string;
 }

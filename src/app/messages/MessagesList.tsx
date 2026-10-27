@@ -1,7 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { FiInbox, FiSearch, FiList, FiArrowDownLeft, FiArrowUpRight } from "react-icons/fi";
+import { useCallback, useState } from "react";
+import {
+  FiInbox,
+  FiList,
+  FiArrowDownLeft,
+  FiArrowUpRight,
+} from "react-icons/fi";
 import MessageCard from "@/components/shared/message-card/MessageCard";
 import SegmentedTabs from "@/components/shared/segmented-tabs/SegmentedTabs";
 import PaginationStatus from "@/components/shared/pagination-status/PaginationStatus";
@@ -10,6 +15,7 @@ import { getMessagesAction } from "@/services/actions/message.action";
 import { Message } from "@/services/types/message_interface";
 import { MessageType } from "@/services/types/enums";
 import { useAppSelector } from "@/redux/store/hooks";
+import SearchInput from "@/components/shared/search-input/SearchInput";
 
 interface Props {
   initialMessages: Message[];
@@ -33,37 +39,46 @@ export default function MessagesList({
   const [totalPages, setTotalPages] = useState(initialTotalPages);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | undefined>(initialError);
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  async function load(nextType: MessageType, nextSearch: string, nextPage: number) {
-    setIsLoading(true);
-    setError(undefined);
+  const load = useCallback(
+    async (nextType: MessageType, nextSearch: string, nextPage: number) => {
+      setIsLoading(true);
+      setError(undefined);
 
-    const res = await getMessagesAction({
-      type: nextType,
-      page: String(nextPage),
-      limit: String(limit),
-      search: nextSearch.trim() || undefined,
-    });
-    setIsLoading(false);
+      const res = await getMessagesAction({
+        type: nextType,
+        page: String(nextPage),
+        limit: String(limit),
+        search: nextSearch || undefined,
+      });
 
-    if (!res.ok) return setError(res.error.message);
+      setIsLoading(false);
 
-    const { data, meta } = res.data.data;
-    setMessages((prev) => (nextPage === 1 ? data : [...prev, ...data]));
-    setPage(nextPage);
-    setTotalPages(meta.totalPages);
-  }
+      if (!res.ok) {
+        setError(res.error.message);
+        return;
+      }
+
+      const { data, meta } = res.data.data;
+
+      setMessages((prev) => (nextPage === 1 ? data : [...prev, ...data]));
+      setPage(nextPage);
+      setTotalPages(meta.totalPages);
+    },
+    [limit],
+  );
+
+  const handleSearch = useCallback(
+    (value: string) => {
+      setSearch(value);
+      load(type, value, 1);
+    },
+    [type, load],
+  );
 
   function handleTab(next: MessageType) {
     setType(next);
     load(next, search, 1);
-  }
-
-  function handleSearch(value: string) {
-    setSearch(value);
-    if (timer.current) clearTimeout(timer.current);
-    timer.current = setTimeout(() => load(type, value, 1), 400); // debounce
   }
 
   return (
@@ -80,15 +95,12 @@ export default function MessagesList({
           ]}
         />
 
-        <div className="relative">
-          <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-          <input
-            value={search}
-            onChange={(e) => handleSearch(e.target.value)}
-            placeholder="Search messages..."
-            className="w-full rounded-xl border border-transparent bg-muted py-2.5 pl-9 pr-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-main-color focus:outline-none sm:w-64"
-          />
-        </div>
+        <SearchInput
+          onSearch={handleSearch}
+          placeholder="Search messages..."
+          debounceMs={400}
+          className="sm:w-64"
+        />
       </div>
 
       {/* feed */}
@@ -97,9 +109,11 @@ export default function MessagesList({
           {messages.length === 0 && !isLoading && !error ? (
             <IsEmpty
               icon={<FiInbox />}
-              title="No messages yet"
+              title={
+                search.length > 0 ? "No messages found." : "No messages yet."
+              }
               description={
-                search
+                search.length > 0
                   ? "No message matches your search."
                   : "Share your link so people can send you honest messages."
               }
@@ -115,7 +129,9 @@ export default function MessagesList({
                   key={message._id}
                   message={message}
                   meId={meId}
-                  onDeleted={(id) => setMessages((prev) => prev.filter((m) => m._id !== id))}
+                  onDeleted={(id) =>
+                    setMessages((prev) => prev.filter((m) => m._id !== id))
+                  }
                 />
               ))}
 
