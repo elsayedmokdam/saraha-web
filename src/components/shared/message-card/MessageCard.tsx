@@ -25,6 +25,8 @@ export default function MessageCard({
   meId,
   onDeleted,
 }: MessageCardProps) {
+  console.log({ message});
+  
   const [busy, setBusy] = useState<"delete" | "request" | null>(null);
   const [requested, setRequested] = useState(false);
 
@@ -82,7 +84,7 @@ export default function MessageCard({
                 {message.content}
               </p>
             )}
-            <AttachmentGallery attachments={message.attachment} />
+            <AttachmentGallery attachments={message.attachments} />
             {meta}
           </div>
         </div>
@@ -119,7 +121,7 @@ export default function MessageCard({
               {message.content}
             </p>
           )}
-          <AttachmentGallery attachments={message.attachment} />
+          <AttachmentGallery attachments={message.attachments} />
           {meta}
         </div>
         {/* The API lets only the RECEIVER delete / ask who sent it */}

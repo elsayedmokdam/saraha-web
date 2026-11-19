@@ -5,7 +5,7 @@ export interface Message {
   id?: string;
   content?: string;
   /** server paths such as `./assets/message/<uuid>.png` -> use `assetUrl()` */
-  attachment: string[];
+  attachments: string[];
   senderId?: string;
   receiverId: string;
   /** becomes `false` once an identity request was accepted */
