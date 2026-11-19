@@ -18,7 +18,9 @@ const nextConfig: NextConfig = {
   // The API serves uploads from `/assets/**` but helmet sends `Cross-Origin-Resource-Policy: same-origin`,
   // so the browser refuses to render them cross-origin. Proxying them through this app makes them same-origin.
   async rewrites() {
-    return [{ source: "/media/:path*", destination: `${API_URL}/assets/:path*` }];
+    return [
+      { source: "/media/:path*", destination: `${API_URL}/assets/:path*` },
+    ];
   },
 };
 
