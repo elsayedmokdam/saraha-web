@@ -1,10 +1,5 @@
 import type { NextConfig } from "next";
 
-// Where the Saraha API lives. Used to proxy uploaded files (avatars / attachments).
-const API_URL = (
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"
-).replace(/\/+$/, "");
-
 const nextConfig: NextConfig = {
   reactCompiler: true,
 
@@ -19,7 +14,10 @@ const nextConfig: NextConfig = {
   // so the browser refuses to render them cross-origin. Proxying them through this app makes them same-origin.
   async rewrites() {
     return [
-      { source: "/media/:path*", destination: `${API_URL}/assets/:path*` },
+      {
+        source: "/media/:path*",
+        destination: `http://localhost:3000/assets/:path*`,
+      },
     ];
   },
 };
