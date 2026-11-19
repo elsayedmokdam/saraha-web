@@ -97,14 +97,14 @@ export default function IdentityRequestCard({
           <div className="p-4">
             <p className="whitespace-pre-wrap wrap-break-word text-sm leading-7 text-foreground">
               {message?.content ||
-                (message?.attachment?.length
+                (message?.attachments?.length
                   ? "This message contains attachments only."
                   : "This message is no longer available.")}
             </p>
 
-            {!!message?.attachment?.length && (
+            {!!message?.attachments?.length && (
               <div className="mt-3 border-t border-border/60 pt-3">
-                <AttachmentGallery attachments={message.attachment} />
+                <AttachmentGallery attachments={message.attachments} />
               </div>
             )}
           </div>

@@ -3,10 +3,7 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import {
-  FiArrowLeft,
   FiArrowUp,
-  FiEye,
-  FiHelpCircle,
   FiPaperclip,
   FiSend,
   FiX,
