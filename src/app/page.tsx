@@ -31,7 +31,7 @@ export default async function Page() {
               <>
                 <Link
                   href="/messages"
-                  className="inline-flex items-center gap-2 rounded-xl bg-card px-7 py-3 font-semibold text-main-color hover:bg-white/90"
+                  className="inline-flex items-center gap-2 rounded-xl bg-card px-7 py-3 font-semibold text-main-color hover:bg-primary-foreground/70"
                 >
                   <FiInbox /> Open my messages
                 </Link>

@@ -75,41 +75,41 @@
 
   /* Backgrounds */
   --background: #f8fafc;
-  --foreground: #111827;
+  --foreground: #0f172a;
 
   --card: #ffffff;
-  --card-foreground: #111827;
+  --card-foreground: #0f172a;
 
   --popover: #ffffff;
-  --popover-foreground: #111827;
+  --popover-foreground: #0f172a;
 
   /* Primary */
-  --primary: #111827;
+  --primary: #0f172a;
   --primary-foreground: #ffffff;
 
   /* Secondary */
-  --secondary: #e9edf2;
-  --secondary-foreground: #1f2937;
+  --secondary: #e2e8f0;
+  --secondary-foreground: #1e293b;
 
   /* Muted */
   --muted: #f1f5f9;
-  --muted-foreground: #64748b;
+  --muted-foreground: #475569;
 
   /* Accent */
   --accent: #e2e8f0;
   --accent-foreground: #0f172a;
 
   /* States */
-  --destructive: #dc2626;
+  --destructive: #b91c1c;
 
   /* Borders & Inputs */
-  --border: #dbe1e8;
-  --input: #cbd5e1;
-  --ring: #64748b;
+  --border: #cbd5e1;
+  --input: #94a3b8;
+  --ring: #475569;
 
   /* Charts */
-  --chart-1: #1e293b;
-  --chart-2: #475569;
+  --chart-1: #0f172a;
+  --chart-2: #334155;
   --chart-3: #64748b;
   --chart-4: #94a3b8;
   --chart-5: #cbd5e1;
@@ -119,29 +119,29 @@
 
   /* Sidebar */
   --sidebar: #ffffff;
-  --sidebar-foreground: #111827;
-  --sidebar-primary: #111827;
+  --sidebar-foreground: #0f172a;
+  --sidebar-primary: #0f172a;
   --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #f1f5f9;
+  --sidebar-accent: #e2e8f0;
   --sidebar-accent-foreground: #0f172a;
-  --sidebar-border: #dbe1e8;
-  --sidebar-ring: #64748b;
+  --sidebar-border: #cbd5e1;
+  --sidebar-ring: #475569;
 
   /* Chat */
-  --chat-bg: #edf1f5;
+  --chat-bg: #e9eef5;
   --bubble-in: #ffffff;
-  --bubble-in-foreground: #111827;
+  --bubble-in-foreground: #0f172a;
   --bubble-out: #334155;
   --bubble-out-foreground: #ffffff;
 
   /* Semantic Colors */
-  --success: #15803d;
+  --success: #166534;
   --success-bg: #dcfce7;
 
-  --warning: #b45309;
+  --warning: #92400e;
   --warning-bg: #fef3c7;
 
-  --info: #1d4ed8;
+  --info: #1e40af;
   --info-bg: #dbeafe;
 }
 
@@ -167,28 +167,28 @@
   --primary-foreground: #09090b;
 
   /* Secondary */
-  --secondary: #27272a;
-  --secondary-foreground: #e4e4e7;
+  --secondary: #303036;
+  --secondary-foreground: #f4f4f5;
 
   /* Muted */
-  --muted: #202024;
-  --muted-foreground: #a1a1aa;
+  --muted: #27272a;
+  --muted-foreground: #c4c4cc;
 
   /* Accent */
-  --accent: #303036;
+  --accent: #3f3f46;
   --accent-foreground: #fafafa;
 
   /* States */
-  --destructive: #f87171;
+  --destructive: #fca5a5;
 
   /* Borders & Inputs */
-  --border: #303036;
-  --input: #404047;
-  --ring: #a1a1aa;
+  --border: #3f3f46;
+  --input: #52525b;
+  --ring: #d4d4d8;
 
   /* Charts */
   --chart-1: #fafafa;
-  --chart-2: #d4d4d8;
+  --chart-2: #e4e4e7;
   --chart-3: #a1a1aa;
   --chart-4: #71717a;
   --chart-5: #52525b;
@@ -198,26 +198,26 @@
   --sidebar-foreground: #fafafa;
   --sidebar-primary: #fafafa;
   --sidebar-primary-foreground: #09090b;
-  --sidebar-accent: #27272a;
+  --sidebar-accent: #303036;
   --sidebar-accent-foreground: #fafafa;
-  --sidebar-border: #303036;
-  --sidebar-ring: #a1a1aa;
+  --sidebar-border: #3f3f46;
+  --sidebar-ring: #d4d4d8;
 
   /* Chat */
   --chat-bg: #09090b;
   --bubble-in: #202024;
   --bubble-in-foreground: #fafafa;
-  --bubble-out: #3f3f46;
+  --bubble-out: #52525b;
   --bubble-out-foreground: #ffffff;
 
   /* Semantic Colors */
-  --success: #4ade80;
+  --success: #86efac;
   --success-bg: #14532d;
 
-  --warning: #fbbf24;
+  --warning: #fde68a;
   --warning-bg: #78350f;
 
-  --info: #60a5fa;
+  --info: #93c5fd;
   --info-bg: #1e3a8a;
 }
 
@@ -226,7 +226,7 @@
 /* ------------------------------------------------------------------ */
 
 @theme {
-  --color-main-color: #111827;
+  --color-main-color: #0f172a;
 
   --color-success: var(--success);
   --color-warning: var(--warning);
@@ -244,9 +244,10 @@
 @layer base {
   * {
     border-color: var(--border);
+
     scrollbar-width: thin;
     scrollbar-color:
-      color-mix(in oklab, var(--foreground) 22%, transparent)
+      color-mix(in oklab, var(--foreground) 35%, transparent)
       transparent;
   }
 
@@ -264,9 +265,22 @@
   ::selection {
     background: color-mix(
       in oklab,
-      var(--color-main-color) 20%,
+      var(--color-main-color) 25%,
       transparent
     );
+  }
+
+  /* Form controls */
+  input,
+  textarea,
+  select {
+    color: var(--foreground);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--muted-foreground);
+    opacity: 1;
   }
 }
 
@@ -278,7 +292,7 @@
   background-color: var(--chat-bg);
 
   background-image: radial-gradient(
-    color-mix(in oklab, var(--foreground) 9%, transparent) 1px,
+    color-mix(in oklab, var(--foreground) 12%, transparent) 1px,
     transparent 1px
   );
 
@@ -302,7 +316,7 @@
 /* ------------------------------------------------------------------ */
 
 .swal-overlay {
-  background-color: rgba(0, 0, 0, 0.65);
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .swal-modal {
@@ -330,16 +344,18 @@
 }
 
 .swal-button--cancel {
-  background-color: var(--muted);
-  color: var(--foreground);
+  background-color: var(--secondary);
+  color: var(--secondary-foreground);
 }
 
 .swal-button--cancel:not([disabled]):hover {
   background-color: var(--accent);
+  color: var(--accent-foreground);
 }
 
 .swal-button--danger {
   background-color: var(--destructive);
+  color: #ffffff;
 }
 
 .swal-icon--warning {
