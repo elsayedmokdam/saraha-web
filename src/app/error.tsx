@@ -18,7 +18,7 @@ export default function Error({
         title="Something went wrong"
         description={error.message || "An unexpected error occurred."}
       />
-      <AppButton onClick={reset} className="-mt-8 bg-main-color text-white px-6 py-5 rounded-xl">
+      <AppButton onClick={reset} className="-mt-8 bg-main-color text-primary-foreground px-6 py-5 rounded-xl">
         Try again
       </AppButton>
     </div>

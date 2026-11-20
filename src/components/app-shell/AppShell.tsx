@@ -27,7 +27,7 @@ export interface Viewer {
 function Logo({ withText = true }: { withText?: boolean }) {
   return (
     <Link href="/" className="flex items-center gap-2" aria-label="Saraha home">
-      <span className="flex size-10 items-center justify-center rounded-xl bg-linear-to-br from-main-color to-fuchsia-500 text-white shadow-md">
+      <span className="flex size-10 items-center justify-center rounded-xl bg-linear-to-br from-primary to-gray-500 text-foreground shadow-md">
         <FaUserSecret className="size-5" />
       </span>
       {withText && (
@@ -69,7 +69,7 @@ export default function AppShell({
               <Link href="/signin" className="hidden rounded-xl px-4 py-2 text-sm font-medium text-muted-foreground hover:text-main-color sm:block">
                 Sign in
               </Link>
-              <Link href="/signup" className="rounded-xl bg-main-color px-4 py-2 text-sm font-semibold text-white hover:bg-main-color/90">
+              <Link href="/signup" className="rounded-xl bg-main-color px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-main-color/90">
                 Get started
               </Link>
             </div>

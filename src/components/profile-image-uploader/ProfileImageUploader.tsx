@@ -52,7 +52,7 @@ export default function ProfileImageUploader({
         aria-label="Change profile image"
         onClick={() => inputRef.current?.click()}
         disabled={uploading}
-        className="absolute bottom-0 right-0 flex size-9 items-center justify-center rounded-full bg-main-color text-white shadow-md hover:bg-main-color/90 cursor-pointer"
+        className="absolute bottom-0 right-0 flex size-9 items-center justify-center rounded-full bg-main-color text-primary-foreground shadow-md hover:bg-main-color/90 cursor-pointer"
       >
         {uploading ? <ImSpinner className="animate-spin" /> : <FiCamera />}
       </button>

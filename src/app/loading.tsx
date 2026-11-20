@@ -6,21 +6,21 @@ export default function Loading() {
       {/* Animated Logo */}
       <div className="relative mb-8 flex h-24 w-24 items-center justify-center">
         {/* Outer Glow */}
-        <div className="absolute inset-0 rounded-full bg-violet-500/10 blur-xl animate-pulse" />
+        <div className="absolute inset-0 animate-pulse rounded-full bg-primary/10 blur-xl" />
 
         {/* Rotating Ring */}
-        <div className="absolute inset-0 rounded-full border-2 border-violet-500/10 border-t-violet-600 border-r-purple-400 animate-spin" />
+        <div className="absolute inset-0 animate-spin rounded-full border-2 border-border border-t-primary border-r-muted-foreground/50" />
 
         {/* Inner Circle */}
-        <div className="relative flex h-16 w-16 items-center justify-center rounded-full border border-violet-500/20 bg-linear-to-br from-violet-500/15 via-purple-500/10 to-transparent shadow-lg shadow-violet-500/10">
-          <span className="bg-linear-to-br from-violet-500 to-purple-400 bg-clip-text text-4xl font-extrabold text-transparent">
+        <div className="relative flex h-16 w-16 items-center justify-center rounded-full border border-border bg-linear-to-br from-primary/10 via-muted to-transparent shadow-lg shadow-primary/10">
+          <span className="bg-linear-to-br from-primary to-muted-foreground bg-clip-text text-4xl font-extrabold text-transparent">
             S
           </span>
         </div>
 
         {/* Orbiting Dot */}
         <div className="absolute inset-0 animate-spin">
-          <div className="absolute -top-1 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full border-2 border-background bg-violet-500 shadow-md shadow-violet-500/40" />
+          <div className="absolute -top-1 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full border-2 border-background bg-primary shadow-md shadow-primary/30" />
         </div>
       </div>
 
@@ -34,8 +34,8 @@ export default function Loading() {
       </p>
 
       {/* Loading Progress Indicator */}
-      <div className="mt-7 h-1 w-36 overflow-hidden rounded-full bg-violet-500/10">
-        <div className="h-full w-1/2 animate-[loading_1.5s_ease-in-out_infinite] rounded-full bg-linear-to-r from-violet-500 via-purple-500 to-violet-400" />
+      <div className="mt-7 h-1 w-36 overflow-hidden rounded-full bg-muted">
+        <div className="h-full w-1/2 animate-[loading_1.5s_ease-in-out_infinite] rounded-full bg-linear-to-r from-primary via-muted-foreground to-primary" />
       </div>
 
       <p className="mt-4 text-xs font-medium tracking-wide text-muted-foreground/70">

@@ -23,7 +23,7 @@ export default async function Page({ params }: { params: Promise<{ id: string }>
         <p className="max-w-sm text-sm text-muted-foreground">
           {response && !response.ok ? response.error.message : "Invalid conversation id."}
         </p>
-        <Link href="/conversations" className="rounded-xl bg-main-color px-5 py-2.5 text-sm font-semibold text-white hover:bg-main-color/90">
+        <Link href="/conversations" className="rounded-xl bg-main-color px-5 py-2.5 text-sm font-semibold text-primary-foreground hover:bg-main-color/90">
           Back to chats
         </Link>
       </div>

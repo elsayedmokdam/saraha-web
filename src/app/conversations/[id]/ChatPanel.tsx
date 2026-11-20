@@ -280,7 +280,7 @@ export default function ChatPanel({
                   </p>
                   <AttachmentGallery attachments={m.attachment} />
                   <p
-                    className={`mt-0.5 text-right text-[10px] ${mine ? "text-white/70" : "text-muted-foreground"}`}
+                    className={`mt-0.5 text-right text-[10px] ${mine ? "text-foreground/70" : "text-muted-foreground"}`}
                   >
                     {timeOnly(m.createdAt)}
                   </p>
@@ -363,7 +363,7 @@ export default function ChatPanel({
             aria-label="Send message"
             onClick={handleSend}
             disabled={sending || text.trim().length === 0}
-            className="flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-full bg-main-color text-white shadow-md transition hover:bg-main-color/90 disabled:cursor-not-allowed disabled:opacity-50"
+            className="flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-full bg-main-color text-primary-foreground shadow-md transition hover:bg-main-color/90 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {sending ? (
               <ImSpinner className="animate-spin" />

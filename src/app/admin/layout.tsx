@@ -43,7 +43,7 @@ export default function AdminLayout({
       {/* Mobile Header */}
       <header className="sticky top-0 z-40 flex h-16 items-center justify-between border-b border-border bg-card/95 px-4 backdrop-blur md:hidden">
         <Link href="/" className="flex items-center gap-2">
-          <span className="flex size-9 items-center justify-center rounded-xl bg-main-color text-white">
+          <span className="flex size-9 items-center justify-center rounded-xl bg-main-color text-primary-foreground">
             <FiShield size={19} />
           </span>
           <span className="font-bold">Admin Panel</span>
@@ -67,7 +67,7 @@ export default function AdminLayout({
             href="/"
             className="flex h-20 items-center gap-3 border-b border-border px-6"
           >
-            <span className="flex size-10 items-center justify-center rounded-xl bg-main-color text-white shadow-sm">
+            <span className="flex size-10 items-center justify-center rounded-xl bg-main-color text-primary-foreground shadow-sm">
               <FiShield size={21} />
             </span>
             <div>

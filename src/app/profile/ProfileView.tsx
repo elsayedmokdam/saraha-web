@@ -136,7 +136,7 @@ export default function ProfileView({ user }: { user: User }) {
             </AppButton>
             <AppButton
               onClick={() => handleLogout(1)}
-              className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-700"
+              className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-foreground hover:bg-red-700"
             >
               <MdDevices /> Log out of all devices
             </AppButton>

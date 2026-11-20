@@ -32,7 +32,7 @@ export default async function Page() {
         actions={
           <Link
             href="/settings"
-            className="flex items-center gap-2 rounded-xl bg-main-color px-4 py-2 text-sm font-semibold text-white hover:bg-main-color/90"
+            className="flex items-center gap-2 rounded-xl bg-main-color px-4 py-2 text-sm font-semibold text-primary-foreground hover:bg-main-color/90"
           >
             <FiSettings /> <span className="hidden sm:inline">Edit</span>
           </Link>

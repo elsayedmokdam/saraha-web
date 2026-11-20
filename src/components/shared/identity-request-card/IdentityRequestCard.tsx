@@ -125,7 +125,7 @@ export default function IdentityRequestCard({
                 onClick={() => respond("accepted")}
                 loading={busy !== null}
                 disabled={busy !== null}
-                className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-main-color px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:bg-main-color/90 disabled:cursor-not-allowed disabled:opacity-60"
+                className="flex min-h-11 flex-1 items-center justify-center gap-2 rounded-xl bg-main-color px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-main-color/90 disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <FiCheck className="size-4 shrink-0" />
                 <span>

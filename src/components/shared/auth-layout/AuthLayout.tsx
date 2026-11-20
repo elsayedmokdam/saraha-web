@@ -27,12 +27,12 @@ export default function AuthLayout({
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
           {/* Left Section */}
           <div className="hidden lg:block">
-            <div className="rounded-[32px] bg-linear-to-br from-main-color to-fuchsia-500 p-16 text-white shadow-xl">
+            <div className="rounded-[32px] bg-linear-to-br from-primary to-gray-500 p-16 text-foreground shadow-xl">
               <FaUserSecret className="size-20 mb-8 opacity-90" />
               <h1 className="text-4xl font-bold tracking-tight">
                 Say what you really think. Anonymously.
               </h1>
-              <p className="mt-6 text-lg text-white/85 leading-8">
+              <p className="mt-6 text-lg text-foreground/85 leading-8">
                 Receive honest messages from friends and colleagues, and decide
                 for yourself when to find out who wrote them.
               </p>
@@ -69,7 +69,9 @@ export default function AuthLayout({
             {footer && (
               <>
                 <div className="my-5 w-full h-px bg-linear-to-r from-transparent via-border to-transparent"></div>
-                <div className="text-center text-sm text-muted-foreground">{footer}</div>
+                <div className="text-center text-sm text-muted-foreground">
+                  {footer}
+                </div>
               </>
             )}
           </div>

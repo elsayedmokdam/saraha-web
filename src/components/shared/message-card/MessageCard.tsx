@@ -64,7 +64,7 @@ export default function MessageCard({
 
   const meta = (
     <p
-      className={`mt-1 text-right text-[10px] ${sentByMe ? "text-white/70" : "text-muted-foreground"}`}
+      className={`mt-1 text-right text-[10px] ${sentByMe ? "text-foreground/70" : "text-muted-foreground"}`}
     >
       {dayLabel(message.createdAt)} · {timeOnly(message.createdAt)}
     </p>
@@ -76,7 +76,7 @@ export default function MessageCard({
       <article className="flex justify-end">
         <div className="max-w-[85%] md:max-w-[70%]">
           <div className="bubble-out-tail rounded-2xl bg-bubble-out px-4 py-2.5 text-bubble-out-foreground shadow-sm">
-            <p className="mb-1 text-[11px] font-semibold text-white/80">
+            <p className="mb-1 text-[11px] font-semibold text-foreground/80">
               To {message.isAnonymous ? "Anonymous" : "Identity revealed"}
             </p>
             {message.content && (

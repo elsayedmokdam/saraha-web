@@ -16,11 +16,11 @@ export default function ShareLinkCard({ userId }: { userId: string }) {
   }
 
   return (
-    <div className="rounded-2xl bg-linear-to-br from-main-color to-fuchsia-500 p-6 text-white shadow-lg">
-      <p className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-white/80">
+    <div className="rounded-2xl bg-linear-to-br from-primary to-gray-500 p-6 text-foreground shadow-lg">
+      <p className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wide text-foreground/80">
         <FiLink /> Your personal link
       </p>
-      <p className="mt-2 text-sm text-white/90">
+      <p className="mt-2 text-sm text-foreground/90">
         Share it so people can send you anonymous messages.
       </p>
       <div className="mt-4 flex items-center gap-2 rounded-xl bg-white/15 p-2 ps-4">

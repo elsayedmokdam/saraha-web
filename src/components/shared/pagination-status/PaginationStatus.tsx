@@ -39,7 +39,7 @@ export default function PaginationStatus({
         <AppButton
           onClick={handleLoadMore}
           disabled={isLoading}
-          className="px-8 py-6 bg-main-color text-white font-semibold rounded-lg hover:bg-main-color/90 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
+          className="px-8 py-6 bg-main-color text-primary-foreground font-semibold rounded-lg hover:bg-main-color/90 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors flex items-center gap-2"
         >
           {isLoading ? (
             <>

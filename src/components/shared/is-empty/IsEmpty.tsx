@@ -48,8 +48,8 @@ export default function IsEmpty({
                 text-sm md:text-base font-semibold transition-all duration-300
                 ${
                   index === 0
-                    ? "bg-main-color text-white hover:scale-[1.03] hover:shadow-lg"
-                    : "border border-border bg-card text-foreground hover:border-main-color hover:text-main-color"
+                    ? "bg-main-color text-primary-foreground hover:scale-[1.03] hover:shadow-lg"
+                    : "border border-border bg-card text-primary-foreground hover:border-main-color hover:text-main-color"
                 }
               `}
             >

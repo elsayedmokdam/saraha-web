@@ -10,7 +10,7 @@ const StepIndicator = ({ currentStep }: StepIndicatorProps) => {
   const circle = (step: number) =>
     `w-9 h-9 rounded-full flex items-center justify-center text-sm font-semibold transition ${
       currentStep >= step
-        ? "bg-main-color text-white"
+        ? "bg-main-color text-primary-foreground"
         : "bg-muted text-muted-foreground/70"
     }`;
   const line = (step: number) =>
@@ -61,8 +61,8 @@ export default function AuthResetLayout({
       <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
         {/* Left Side Banner */}
         <div className="hidden lg:flex flex-col items-center justify-center text-center">
-          <div className="size-64 rounded-full bg-linear-to-br from-main-color to-fuchsia-500 flex items-center justify-center shadow-xl">
-            <FaKey className="size-24 text-white/90" />
+          <div className="size-64 rounded-full bg-linear-to-br from-primary to-gray-500 flex items-center justify-center shadow-xl">
+            <FaKey className="size-24 text-foreground/90" />
           </div>
           <h2 className="text-2xl font-bold text-foreground mt-8">
             Reset Your Password
@@ -102,7 +102,11 @@ export default function AuthResetLayout({
                   <FaArrowLeft className="size-3" /> {backAction.label}
                 </Link>
               ) : (
-                <button type="button" onClick={backAction.onClick} className={backClass}>
+                <button
+                  type="button"
+                  onClick={backAction.onClick}
+                  className={backClass}
+                >
                   <FaArrowLeft className="size-3" /> {backAction.label}
                 </button>
               )}

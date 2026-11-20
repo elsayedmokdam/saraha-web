@@ -27,7 +27,7 @@ const AppForm = forwardRef<AppFormRef, AppFormProps>(
       schema,
       defaultValues,
       buttonText = "Submit",
-      buttonClassName = "bg-main-color text-white font-semibold px-6 py-6 rounded-xl w-full flex items-center justify-center gap-2 transition",
+      buttonClassName = "bg-main-color text-primary-foreground font-semibold px-6 py-6 rounded-xl w-full flex items-center justify-center gap-2 transition",
       submitButton = true,
       resetButton = false,
       formClassName = "space-y-4",
